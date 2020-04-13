@@ -1,0 +1,106 @@
+<p>product-edit works! en modo: {{modoComponente}} </p>
+<form #f="ngForm" (ngSubmit)="submit(f)" >
+    <div class="media">
+        <a class="d-flex align-self-bottom" href="#">
+            <img *ngIf="modoComponente== 'nuevo'" class="mr-3"
+            src="https://picsum.photos/id/{{lastPlus}}/100/100"  
+            alt="Generic placeholder image">
+            <img *ngIf="modoComponente == 'editar'" class="mr-3"
+            src="https://picsum.photos/id/{{producto.uid}}/100/100"  
+            alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <div class="form-group">
+            <label for="">uid (clave de producto)</label>
+            <input *ngIf="modoComponente== 'nuevo'"  name="uid" ngModel #uid="ngModel" type="number" class="form-control"  min="0"  required value="{{lastPlus}}" placeholder="{{lastPlus}}" disabled>
+            <input *ngIf="modoComponente == 'editar'" name="uid" ngModel #uid="ngModel" type="number" class="form-control"  min="0"  required value="{{lastPlus}}" placeholder="{{producto.uid}}" disabled>
+
+        </div>
+            <div class="form-group">
+            <label for="">Nombre de producto</label>
+            <input  *ngIf="modoComponente== 'nuevo'" name="name" [(ngModel)]="nombret" #name="ngModel" type="text" class="form-control"   required>
+            <input  *ngIf="modoComponente == 'editar'" [(ngModel)]="producto.nombre"  name="name" ngModel #name="ngModel" type="text" class="form-control"   required>
+            </div>
+            <div class="form-group">
+            <label for="">Marca</label>
+            <select *ngIf="modoComponente== 'nuevo'" class="form-control" name="marca"   name="marca" ngModel #marca="ngModel" >
+                <option value="" selected>Seleccionar una opción</option>
+                <option *ngFor="let item of marcas; let i = index" value="{{item}}">{{item}}</option>
+                <!-- <option value="1">{{item}}</option>
+                <option value="2">LG</option>
+                <option value="3">HP</option> -->
+            </select>
+            <select *ngIf="modoComponente == 'editar'" class="form-control" name="marca"   name="marca" ngModel #marca="ngModel" >
+                <option value="" selected>{{producto.marca}}</option>
+                <option *ngFor="let item of marcas;" value="{{item}}">{{item}}</option>
+                <!-- <option value="1">{{item}}</option>
+                <option value="2">LG</option>
+                <option value="3">HP</option> -->
+            </select>
+            </div>
+            <div class="form-group">
+                <label for="">Precio</label> 
+                <input  *ngIf="modoComponente== 'nuevo'" name="precio" ngModel #precio="ngModel" type="number" class="form-control" required >
+                <input  *ngIf="modoComponente == 'editar'" [(ngModel)]="producto.precio" name="precio" ngModel #precio="ngModel" type="number" class="form-control" required >
+
+            </div>
+            <div class="form-group">
+                <label for="">Breve descripción</label>
+                <input  *ngIf="modoComponente== 'nuevo'" name="desc" ngModel #desc="ngModel" type="text" class="form-control"  required >
+                <input  *ngIf="modoComponente == 'editar'" [(ngModel)]="producto.descripcion" name="desc" ngModel #desc="ngModel" type="text" class="form-control"  required >
+
+            </div>
+            <div class="form-group">
+                <label for="">Existencia</label>
+                <input *ngIf="modoComponente== 'nuevo'" [(ngModel)]="existenciat" name="existencia" ngModel #existencia="ngModel" type="number" class="form-control"  required >
+                <input *ngIf="modoComponente == 'editar'" [(ngModel)]="producto.existencia" name="existencia" ngModel #existencia="ngModel" type="number" class="form-control"  required >
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label for="">Atributo</label>
+            <input #v1 type="text" class="form-control" [(ngModel)]=" atributoT" name="valor">
+        </div>
+        <div class="col-2">
+            <label for="">Valor</label>
+            <input #v2 type="text" class="form-control" [(ngModel)]="valorT" name="valor">
+        </div>
+        <div class="col-2">
+            <label for="">Unidad</label>
+            <input #v3  type="text" class="form-control" [(ngModel)]="unidadT" name="unidad">
+        </div>
+        <div>
+            <label for="" style="color:white">añadir</label>
+            <button type="button" class="form-control btn btn-success" (click)="agregarAtributo()">Añadir</button>
+            <!-- <a  name="" id="" class="form-control btn btn-success" href="#" role="button" > Añadir<i class="fas fa-plus-circle    "></i></a> -->
+        </div>
+    </div>
+
+    <div>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Atributo</th>
+                <th>Valor</th>
+                <th>Unidad</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of arrAtributes">
+                <td scope="row">{{item.atributo}}</td>
+                <td>{{item.valor}}</td>
+                <td>{{item.unidad}}</td>
+                <td><button type="button" class="btn btn-primary" (click)="eliminarAtributo(item)" >Borrar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <input *ngIf="modoComponente == 'nuevo'" type="submit" class="btn btn-primary"  value="Guardar" [class.disabled]="nombret.length <= 0 || existenciat == 0">
+    <input *ngIf="modoComponente == 'editar'" type="submit" class="btn btn-primary"  value="Guardar">
+
+    <button type="button" [routerLink]="['/product']" class="btn btn-secondary ml-3" >Cancelar</button> 
+    </form>

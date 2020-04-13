@@ -1,0 +1,30 @@
+<li class="border list-unstyled">
+    <div class="row">
+        <div class="col-1">
+        <input *ngIf="modo  == '/product' " type="checkbox" (click)="enviarIdParaMonitorear(producto.uid)">
+        </div>
+
+        <div class="media col">
+        <img class="mr-3" src="https://picsum.photos/id/{{producto.uid}}/100/100" alt="Generic placeholder image">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">{{ producto.nombre}}</h5>
+            <p>Precio (MXN): $ {{ producto.precio }}</p>
+            <p>marca: {{ producto.marca }} </p>
+            <p>Descripción: {{ producto.descripcion }}  </p>
+            <p>Existencia: {{ producto.existencia }} </p>
+        </div>
+        <div class="media-right col-2 mt-3">
+            <div class="row">
+            <a name="" id="" class="btn btn-primary" href="#" role="button" [routerLink]="['/product/edit', producto.uid]">Editar<i class="fas fa-edit"></i></a>
+            </div>
+            <div class="row mt-3">
+            <a name="" id="" class="btn btn-primary" href="#" role="button" [routerLink]="['/product', producto.uid]">Ver<i class="fas fa-search"></i></a>
+            </div>
+            <div class="row mt-3">
+                <button class="btn btn-danger" type="button" (click)="enviarIdParaEliminar(producto.uid)">Eliminar </button>
+            <!-- <a name="" id="" class="btn btn-danger" href="#" role="button" (click)="productService.deleteProductById(producto.uid)">Eliminar<i class="fas fa-trash"></i></a> -->
+            </div>
+        </div>
+        </div>
+    </div>
+</li>

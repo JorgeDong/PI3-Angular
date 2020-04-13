@@ -1,0 +1,42 @@
+<div class="container">
+<p>product-list works! modo: {{ modo }}</p>
+
+
+<div class="row">
+    <div class="col-4">
+        <input type="text" 
+         class="form-control" name="" id="" aria-describedby="helpId" placeholder="" [(ngModel)]="busqueda">
+    </div> 
+    <div>
+        <!-- <a name="" id="" class="btn btn-primary" href="#" role="button" (click)="buscar()" >Buscar producto</a> -->
+        <button type="button" class="btn btn-primary" (click)="buscar()"> Buscar Producto</button>
+    </div>
+    <div  class="ml-2">
+        <!-- <a nclass="btn btn-success"  href="#" role="button" >Añadir seleccionados a monitoreados</a> -->
+        <button *ngIf="modo  == '/product' " type="button" class="btn btn-success" (click)="monitorear()">Añadir seleccionados a monitoreados</button>
+    </div>
+</div>
+
+<div class=" mt-2">
+    <ul *ngIf="modo  == '/product' ">
+        <app-product *ngFor="let product of productosBusqueda" 
+        [producto]="product"
+        (contador)="actualizarContador($event)"
+        (idMoniotear)="enviarMonitoreo($event)"
+        ></app-product>
+    </ul>
+
+    <ul *ngIf="modo  == '/monitoreo'">
+        <app-product *ngFor="let product of productosMonitoreados" 
+        [producto]="product"
+        (contador)="actualizarContador($event)"
+        (idMoniotear)="enviarMonitoreo($event)"
+        ></app-product>
+    </ul>
+
+    <div *ngIf="productosBusqueda.length == 0" class="alert alert-danger" role="alert"   >
+        <strong>Ningún producto concuerda con la búsqueda</strong>
+    </div>
+</div>
+
+</div>
